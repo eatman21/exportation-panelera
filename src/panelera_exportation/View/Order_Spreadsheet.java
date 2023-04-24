@@ -132,7 +132,7 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
             filas[2] = ordenes.getProduct_type();
             filas[3] = ordenes.getAmount_order();
             filas[4] = ordenes.getDestination();
-            filas[5] = ordenes.getDate();
+            filas[5] = ordenes.getFechaEnvio();
             filas[6] = ordenes.getCurrency();
             filas[7] = ordenes.getTota();
             filas[8] = ordenes.getShipping_type();
