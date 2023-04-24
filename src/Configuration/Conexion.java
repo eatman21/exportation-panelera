@@ -14,26 +14,15 @@ import java.sql.ResultSet;
 
 public class Conexion {
 
-    String bd = "panelera_exportation";
-    String url = "jdbc:mysql://localhost:3308/";
-    String user = "root";
-    String password = "";
-    String driver = "com.mysql.cj.jdbc.Driver";
+    private String url = "jdbc:mysql://localhost/panelera_exportation";
+    private String usuario = "root";
+    private String clave = "";
+    String driver = "com.mysql.jdbc.Driver";
+    private Connection conexion;
 
     Connection cx;
 
-    public Connection connectar() {
-
-        try {
-            Class.forName(driver);
-            cx = DriverManager.getConnection(url + bd, user, password);
-            System.out.println("Connected" + bd);
-
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("Not Connected" + bd);
-        }
-        return cx;
+    public Conexion() {
 
     }
 
@@ -45,12 +34,27 @@ public class Conexion {
         this.cx = cx;
     }
 
-    
-    public void desconectar() {
+    public Connection getConexion() {
+        return conexion;
+    }
+
+    public void connectar() {
         try {
-            cx.close();
+            Class.forName(driver);
+            conexion = DriverManager.getConnection(this.url, this.usuario, this.clave);
+            System.out.println("Conectado");
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void desconectar() {
+        connectar();
+        try {
+            conexion.close();
+            System.out.println("Desconectado");
         } catch (SQLException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

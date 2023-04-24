@@ -5,6 +5,7 @@
 package panelera_exportation.Controller;
 import Configuration.Conexion;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 
@@ -14,7 +15,7 @@ import java.sql.ResultSet;
  */
 public class LoginController {
     
-    public boolean validateusername(String username, String password){
+    public boolean validateusername(String username, String password) throws SQLException{
         Conexion cn= new Conexion();
         cn.connectar();
         boolean flag = false;
@@ -35,7 +36,7 @@ public class LoginController {
                  
             }
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println();
             
         }finally{

@@ -4,6 +4,9 @@
  */
 package panelera_exportation.View;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import panelera_exportation.Controller.LoginController;
 
@@ -84,13 +87,17 @@ public class Singin_panelera extends javax.swing.JFrame {
        LoginController logingController = new LoginController();
         String  use= txtusername.getText();
         String  pass= new String(fldPassword.getPassword());
-        if (logingController.validateusername(use,pass)){
-        
-        Create_Order Creord = new Create_Order();
-        Creord.setVisible(true);
-        this.dispose();
-        }else
-            JOptionPane.showMessageDialog(null,"Wrang Username or PassWord");
+        try {
+            if (logingController.validateusername(use,pass)){
+                
+                Create_Order Creord = new Create_Order();
+                Creord.setVisible(true);
+                this.dispose();
+            }else
+                JOptionPane.showMessageDialog(null,"Wrang Username or PassWord");
+        } catch (SQLException ex) {
+            Logger.getLogger(Singin_panelera.class.getName()).log(Level.SEVERE, null, ex);
+        }
          
     }//GEN-LAST:event_btnLogingActionPerformed
         /**
