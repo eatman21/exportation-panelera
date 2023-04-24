@@ -265,11 +265,12 @@ public class Create_Order extends javax.swing.JFrame {
     private void btnCreat_OrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreat_OrderActionPerformed
         Create_OrderDTO registrar = new Create_OrderDTO();
         Date fecha = jDateChooserFecha.getDate();
-        System.out.println("Fecha: "+fecha);
+        System.out.println("Fecha tomada: "+fecha);
 
         
         destination = txtDestination.getText();
         full_name = txtFull_Name.getText();
+        
         switch (bxProducto_Type.getSelectedIndex()) {
             case 0:
                 product_type = "Panela";
