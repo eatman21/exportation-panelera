@@ -6,8 +6,11 @@ package panelera_exportation.View;
 
 import javax.swing.table.DefaultTableModel;
 import Model.Create_OrderDTO;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import panelera_exportation.Controller.Create_OrderController;
 
 /**
@@ -19,7 +22,7 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
     /**
      * Creates new form Order_Spreadsheet
      */
-    public Order_Spreadsheet() {
+    public Order_Spreadsheet() throws SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
 
@@ -64,9 +67,19 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
 
         btnSave.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnSend.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         btnSend.setText("Edit");
+        btnSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSendActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setViewportView(tbOrder);
 
@@ -87,8 +100,8 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
                         .addComponent(btnSend))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(88, 88, 88)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(260, 260, 260))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(220, 220, 220))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,6 +121,10 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        Edit_Order editar = new Edit_Order();
+        editar.setLocationRelativeTo(this);
+        editar.setVisible(true);
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -116,7 +133,19 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
 
-    void traerDatosTabla() {
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Edit_Order editar = new Edit_Order();
+        editar.setLocationRelativeTo(this);
+        editar.setVisible(true);
+    }//GEN-LAST:event_btnSendActionPerformed
+
+    void traerDatosTabla() throws SQLException {
         DefaultTableModel model = new DefaultTableModel();
 
         Create_OrderController create_order = new Create_OrderController();
@@ -170,7 +199,11 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Order_Spreadsheet().setVisible(true);
+                try {
+                    new Order_Spreadsheet().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Order_Spreadsheet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

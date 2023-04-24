@@ -4,12 +4,27 @@
  */
 package panelera_exportation.View;
 
+import Model.Create_OrderDTO;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import panelera_exportation.Controller.Create_OrderController;
+
 /**
  *
  * @author Cris
  */
 public class Edit_Order extends javax.swing.JFrame {
 
+    private String destination;
+    private Date date;
+    private String full_name;
+    private String product_type;
+    private String amount_order;
+    private String currency;
+    private String shipping_type;
+    private String total;
     /**
      * Creates new form Edit_Order
      */
@@ -43,6 +58,8 @@ public class Edit_Order extends javax.swing.JFrame {
         txtCurrency = new javax.swing.JTextField();
         javax.swing.JLabel lblShipping_Type = new javax.swing.JLabel();
         txtShipping_Type = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        jDateFechaEnvio = new com.toedter.calendar.JDateChooser();
 
         jLabel1.setText("jLabel1");
 
@@ -77,6 +94,13 @@ public class Edit_Order extends javax.swing.JFrame {
 
         lblShipping_Type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblShipping_Type.setText("Shipping Type");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,18 +140,25 @@ public class Edit_Order extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(27, 27, 27))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(txtFull_name, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(lblShipping_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtShipping_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtProduct_type, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(txtProduct_type, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDateFechaEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(41, 41, 41)
+                                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtFull_name, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(lblShipping_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtShipping_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,14 +190,17 @@ public class Edit_Order extends javax.swing.JFrame {
                             .addComponent(lblShipping_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFull_name, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbAmount_Order, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(72, 72, 72)
+                .addGap(28, 28, 28)
+                .addComponent(jDateFechaEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtProduct_type, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbProduct_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(78, 78, 78)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
 
@@ -176,6 +210,37 @@ public class Edit_Order extends javax.swing.JFrame {
     private void txtFull_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFull_nameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFull_nameActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        Create_OrderDTO registrar = new Create_OrderDTO();
+        Date fecha = jDateFechaEnvio.getDate();
+        System.out.println("Fecha tomada: "+fecha);
+
+        
+        destination = txtDestination.getText();
+        full_name = txtFull_name.getText();
+        int id = Integer.valueOf(txtEmploye_ID.getText());
+        
+        amount_order = txtAmount_Order.getText();
+        total = String.valueOf(Integer.parseInt(amount_order) * 4500);
+        destination = txtDestination.getText();
+
+        currency = txtCurrency.getText();
+        registrar.setAmount_order(amount_order);
+        registrar.setCurrency(currency);
+        registrar.setTota(total);
+        registrar.setFechaEnvio(date);
+        registrar.setDestination(destination);
+        registrar.setFull_name(full_name);
+        shipping_type = txtShipping_Type.getText();
+        registrar.setShipping_type(shipping_type);
+        registrar.setProduct_type(product_type);
+
+        Create_OrderController envioDatos = null;
+        envioDatos = new Create_OrderController();
+        envioDatos.actualizarData(registrar,id);
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,6 +278,8 @@ public class Edit_Order extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardar;
+    private com.toedter.calendar.JDateChooser jDateFechaEnvio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lbAmount_Order;
     private javax.swing.JLabel lbDate;
