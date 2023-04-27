@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 
 public class Conexion {
 
-    private String url = "jdbc:mysql://localhost/panelera_exportation";
+    private String url = "jdbc:mysql://localhost:3308/panelera_exportation";
     private String usuario = "root";
     private String clave = "";
     String driver = "com.mysql.jdbc.Driver";

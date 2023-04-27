@@ -62,27 +62,31 @@ public class Create_OrderController {
     public Create_OrderDTO consultemploye_ID(int empleye_ID) throws SQLException {
         ResultSet resul;
         Create_OrderDTO CreateDTO = new Create_OrderDTO();
-        Conexion cn = new Conexion();
-        cn.connectar();
-
-        resul = cn.consultarReg("SELECT * FROM `Create_OrderDTO` WHERE create_orderDTO.employe_ID= " + "employe_ID" + "");
+        String consulta = "SELECT employe_ID,full_name, product_type, amount_order, destination, date, currency, total,shipping_type FROM Create_OrderDTO WHERE employe_ID= '" + empleye_ID + "'  ";
 
         try {
+            cn.connectar();
+            PreparedStatement preparaConsulta = cn.getConexion().prepareStatement(consulta);
+            ResultSet resultado = preparaConsulta.executeQuery();
 
-            while (resul.next()) {
-                CreateDTO.setDestination(resul.getString("destination"));
-                CreateDTO.setFechaEnvio(resul.getDate("date"));
-                CreateDTO.setEmploye_ID(resul.getInt("employe_ID"));
-                CreateDTO.setFull_name(resul.getNString("full_name"));
-                CreateDTO.setAmount_order(resul.getString("amount_order"));
-                CreateDTO.setProduct_type(resul.getString("product_type"));
-                CreateDTO.setCurrency(resul.getString("currency"));
-                CreateDTO.setShipping_type(resul.getString("Shipping_type"));
-
+            if (resultado.next()) {
+                CreateDTO = new Create_OrderDTO();
+                CreateDTO.setDestination(resultado.getString("destination"));
+                CreateDTO.setFechaEnvio(resultado.getDate("date"));
+                CreateDTO.setEmploye_ID(resultado.getInt("employe_ID"));
+                CreateDTO.setFull_name(resultado.getString("full_name"));
+                CreateDTO.setAmount_order(resultado.getString("amount_order"));
+                CreateDTO.setProduct_type(resultado.getString("product_type"));
+                CreateDTO.setCurrency(resultado.getString("currency"));
+                CreateDTO.setShipping_type(resultado.getString("Shipping_type"));
+                CreateDTO.setTota(resultado.getString("total"));
+            } else {
+                CreateDTO = new Create_OrderDTO();
+                JOptionPane.showMessageDialog(null, "No hay registros");
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Problemas al consultar:" + e);
         } finally {
             cn.desconectar();
         }
@@ -104,7 +108,7 @@ public class Create_OrderController {
             Date fechaEnvio = (Date) createDTO.getFechaEnvio();
             if (fechaEnvio != null) {
                 long tiempoEnvio = fechaEnvio.getTime();
-                System.out.println("Tiempo envio:"+tiempoEnvio);
+                System.out.println("Tiempo envio:" + tiempoEnvio);
                 // resto del código
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String fechaMySQL = sdf.format(createDTO.getFechaEnvio());
@@ -129,59 +133,47 @@ public class Create_OrderController {
     }
 
     public void deleteOrder(int employe_ID) {
-        String sql = "Delete FROM create_orderdto WHERE employe_ID = '" + employe_ID + "'";
+        String sql = "Delete FROM create_orderdto WHERE employe_ID='" + employe_ID + "'";
 
         try {
             cn.connectar();
             PreparedStatement stmt = cn.getConexion().prepareStatement(sql);
             int filasAfectadas = stmt.executeUpdate();
             if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Datos Eliminados");
+                JOptionPane.showMessageDialog(null, "Data Deleted");
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontraron datos a eliminar");
+                JOptionPane.showMessageDialog(null, "Error to Delite");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar: " + this.getClass().getName());
+            JOptionPane.showMessageDialog(null, "Error Deleting: " + this.getClass().getName());
         } finally {
             cn.desconectar();
         }
 
     }
-    
-    public void actualizarData(Create_OrderDTO actualiza,int id){
+
+    public void actualizarData(Create_OrderDTO actualiza, int id) {
         try {
             cn.connectar();
-            String sql = "update create_orderdto set full_name=?, product_type=?, amount_order=?, destination=?, date=?, currency=?, Total=?, shipping_type=? where employe_ID ='" + id + "'";
+            String sql = "update create_orderdto set full_name=?, product_type=?, amount_order=?, destination=?,currency=?, Total=?, shipping_type=? where employe_ID ='" + id + "'";
             PreparedStatement st = cn.getConexion().prepareStatement(sql);
             st.setString(1, actualiza.getFull_name());
             st.setString(2, actualiza.getProduct_type());
             st.setString(3, actualiza.getAmount_order());
             st.setString(4, actualiza.getDestination());
-            //Castear fechas
-            Date fechaEnvio = (Date) actualiza.getFechaEnvio();
-            if (fechaEnvio != null) {
-                long tiempoEnvio = fechaEnvio.getTime();
-                System.out.println("Tiempo envio:"+tiempoEnvio);
-                // resto del código
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                String fechaMySQL = sdf.format(actualiza.getFechaEnvio());
-                st.setString(5, fechaMySQL);
-            } else {
-                st.setDate(5, fechaEnvio);
-            }
-
-            st.setString(6, actualiza.getCurrency());
-            st.setString(7, actualiza.getTota());
-            st.setString(8, actualiza.getShipping_type());
+            st.setString(5, actualiza.getCurrency());
+            st.setString(6, actualiza.getTota());
+            st.setString(7, actualiza.getShipping_type());
 
             st.executeUpdate();
             JOptionPane.showMessageDialog(null, "Actualziados");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al Actualizar");
-            
+
         } finally {
             cn.desconectar();
         }
+
     }
 
 }

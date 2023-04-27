@@ -19,7 +19,7 @@ public class Create_OrderDTO {
     String amount_order;
     String currency;
     String shipping_type;
-    String tota;
+    String total;
 
     public String getDestination() {
         return destination;
@@ -86,11 +86,11 @@ public class Create_OrderDTO {
     }
 
     public String getTota() {
-        return tota;
+        return total;
     }
 
     public void setTota(String tota) {
-        this.tota = tota;
+        this.total = tota;
     }
 
     

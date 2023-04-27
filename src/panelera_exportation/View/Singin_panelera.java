@@ -72,7 +72,6 @@ public class Singin_panelera extends javax.swing.JFrame {
         lblpassword.setBounds(195, 191, 158, 40);
 
         fldPassword.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        fldPassword.setText("jPasswordField1");
         getContentPane().add(fldPassword);
         fldPassword.setBounds(365, 192, 320, 40);
 

@@ -6,11 +6,14 @@ package panelera_exportation.View;
 
 import javax.swing.table.DefaultTableModel;
 import Model.Create_OrderDTO;
+import com.mysql.cj.x.protobuf.Mysqlx;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import panelera_exportation.Controller.Create_OrderController;
 
 /**
@@ -18,6 +21,16 @@ import panelera_exportation.Controller.Create_OrderController;
  * @author Cris
  */
 public class Order_Spreadsheet extends javax.swing.JFrame {
+
+    private String destination;
+    private double precio;
+    private Date date;
+    private String full_name;
+    private String product_type;
+    private String amount_order;
+    private String currency;
+    private String shipping_type;
+    private String total;
 
     /**
      * Creates new form Order_Spreadsheet
@@ -39,11 +52,29 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
     private void initComponents() {
 
         btnDelete = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
-        btnSend = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbOrder = new javax.swing.JTable();
+        lblEmploye_ID = new javax.swing.JLabel();
+        txtEmploye_ID = new javax.swing.JTextField();
+        lblEmploye_Full_Name = new javax.swing.JLabel();
+        txtFull_Name = new javax.swing.JTextField();
+        lblDestination = new javax.swing.JLabel();
+        lblShipping_Type = new javax.swing.JLabel();
+        bxShipping_type = new javax.swing.JComboBox<>();
+        lblProduct_Type = new javax.swing.JLabel();
+        bxProducto_Type = new javax.swing.JComboBox<>();
+        lblAmount = new javax.swing.JLabel();
+        txtAmount_Order = new javax.swing.JTextField();
+        lblTotal = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
+        lblCurrency = new javax.swing.JLabel();
+        bxCurrency = new javax.swing.JComboBox<>();
+        btnSearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtSearch = new javax.swing.JTextPane();
+        txtDestination = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(1200, 1200));
@@ -57,14 +88,6 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
             }
         });
 
-        btnAdd.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        btnAdd.setText("Add");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
-
         btnSave.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         btnSave.setText("Save");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
@@ -73,88 +96,355 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
             }
         });
 
-        btnSend.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        btnSend.setText("Edit");
-        btnSend.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSendActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
         jScrollPane2.setViewportView(tbOrder);
+
+        lblEmploye_ID.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblEmploye_ID.setText("Employe ID");
+
+        lblEmploye_Full_Name.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblEmploye_Full_Name.setText("Full Name");
+
+        lblDestination.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblDestination.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logistics.png"))); // NOI18N
+        lblDestination.setText("Destination");
+
+        lblShipping_Type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblShipping_Type.setText("Shipping Type");
+
+        bxShipping_type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        bxShipping_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Baot", "Plane" }));
+
+        lblProduct_Type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblProduct_Type.setText("Product Type");
+
+        bxProducto_Type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        bxProducto_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Panela", "Sugar", "wine", "Ethanol", "Syrup" }));
+        bxProducto_Type.setName(""); // NOI18N
+
+        lblAmount.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblAmount.setText("Amount Order");
+
+        lblTotal.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblTotal.setText("Total");
+
+        lblCurrency.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblCurrency.setText("Currency");
+
+        bxCurrency.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        bxCurrency.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dollar", "Euro" }));
+
+        btnSearch.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(txtSearch);
+
+        txtDestination.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDestinationActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 559, Short.MAX_VALUE)
+                                .addComponent(lblAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(58, 58, 58)
+                                .addComponent(btnSearch)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtAmount_Order, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(59, 59, 59)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(59, 59, 59)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bxCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(156, 156, 156))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(btnDelete)
-                        .addGap(119, 119, 119)
-                        .addComponent(btnAdd)
-                        .addGap(72, 72, 72)
-                        .addComponent(btnSave)
-                        .addGap(104, 104, 104)
-                        .addComponent(btnSend))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(220, 220, 220))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblEmploye_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtEmploye_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(bxShipping_type, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblProduct_Type)
+                                    .addComponent(bxProducto_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblShipping_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblEmploye_Full_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtFull_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnSave)
+                .addGap(41, 41, 41)
+                .addComponent(btnEdit)
+                .addGap(112, 112, 112)
+                .addComponent(btnDelete)
+                .addGap(150, 150, 150))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSave, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtAmount_Order, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bxCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEmploye_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmploye_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEmploye_Full_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFull_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblDestination)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblShipping_Type)
+                        .addGap(18, 18, 18)
+                        .addComponent(bxShipping_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblProduct_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bxProducto_Type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 86, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @SuppressWarnings("empty-statement")
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        Edit_Order editar = new Edit_Order();
-        editar.setLocationRelativeTo(this);
-        editar.setVisible(true);
+
+        String employe_ID = txtEmploye_ID.getText();
+        if (employe_ID.isEmpty() || employe_ID.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Data Need to be enter", "EMploye ID Emtpty", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Create_OrderController deleteorder = new Create_OrderController();
+            deleteorder.deleteOrder(Integer.parseInt(employe_ID));
+        }
+
+
     }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        Create_Order create_Order = new Create_Order();
-        create_Order.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnAddActionPerformed
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        Create_OrderController editOrder = new Create_OrderController();
+        Create_OrderDTO infoActualizar = new Create_OrderDTO();
+
+        //Editar registros
+        String employe_ID = txtEmploye_ID.getText();
+        if (employe_ID.isEmpty() || employe_ID.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Data Need to be enter", "EMploye ID Emtpty", JOptionPane.ERROR_MESSAGE);
+        }
+
+        full_name = txtFull_Name.getText();
+        destination = txtDestination.getText();
+
+        switch (bxProducto_Type.getSelectedIndex()) {
+            case 0:
+                product_type = "Panela";
+                break;
+            case 1:
+                product_type = "Sugar";
+                break;
+            case 2:
+                product_type = "Wine";
+                break;
+            case 3:
+                product_type = "Ethanol";
+                break;
+            case 4:
+                product_type = "Syrup";
+                break;
+            default:
+                System.out.println("No hay producto seleccionado");
+        }
+
+        switch (bxCurrency.getSelectedIndex()) {
+            case 0 -> {
+                currency = "Dollar";
+                precio = 4500;
+            }
+            case 1 -> {
+                currency = "Euro";
+                precio = 5500;
+            }
+            default ->
+                currency = "ERror";
+        }
+
+        shipping_type = switch (bxShipping_type.getSelectedIndex()) {
+            case 0 ->
+                "Boat";
+            case 1 ->
+                "Plane";
+            default ->
+                "Car";
+        };
+
+        amount_order = txtAmount_Order.getText();
+        total = String.valueOf(Integer.parseInt(amount_order) * precio);
+        txtTotal.setText(total);
+
+        destination = txtDestination.getText();
+        
+        infoActualizar.setDestination(destination);
+        infoActualizar.setCurrency(currency);
+        infoActualizar.setShipping_type(shipping_type);
+        infoActualizar.setProduct_type(product_type);
+        infoActualizar.setAmount_order(amount_order);
+        infoActualizar.setTota(total);
+        infoActualizar.setFull_name(full_name);
+        
+        editOrder.actualizarData(infoActualizar, Integer.parseInt(employe_ID));
+
+
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+        String employe_ID = txtSearch.getText();
+        if (employe_ID.isEmpty() || employe_ID.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Data Need to be enter", "EMploye ID Emtpty", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Create_OrderController consultEmploye_ID = new Create_OrderController();
+        Create_OrderDTO search = null;
+        try {
+            search = consultEmploye_ID.consultemploye_ID(Integer.parseInt(employe_ID));
+        } catch (SQLException ex) {
+            Logger.getLogger(Order_Spreadsheet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (search != null) {
+            txtAmount_Order.setText(search.getAmount_order());
+            txtDestination.setText(search.getDestination());
+            txtFull_Name.setText(search.getFull_name());
+            txtTotal.setText(search.getTota());
+
+            switch (search.getShipping_type()) {
+                case "Plane":
+                    bxShipping_type.setSelectedIndex(0);
+                    break;
+                case "Boat":
+                    bxShipping_type.setSelectedIndex(1);
+                    break;
+                default:
+                    throw new AssertionError();
+
+            }
+            switch (search.getProduct_type()) {
+                case "Panela" ->
+                    bxProducto_Type.setSelectedIndex(0);
+                case "Sugar" ->
+                    bxProducto_Type.setSelectedIndex(1);
+
+                case "Wine" ->
+                    bxProducto_Type.setSelectedIndex(2);
+                case "Ethanol" ->
+                    bxProducto_Type.setSelectedIndex(3);
+
+                case "Syrup" ->
+                    bxProducto_Type.setSelectedIndex(4);
+                default ->
+                    throw new AssertionError();
+            }
+            switch (search.getCurrency()) {
+                case "Dollar" ->
+                    bxCurrency.setSelectedIndex(0);
+                case "Euro" ->
+                    bxCurrency.setSelectedIndex(1);
+                default ->
+                    throw new AssertionError();
+
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No hemos encontrado datos.");
+        }
+
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
+    private void txtDestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDestinationActionPerformed
         // TODO add your handling code here:
-        this.dispose();
-        Edit_Order editar = new Edit_Order();
-        editar.setLocationRelativeTo(this);
-        editar.setVisible(true);
-    }//GEN-LAST:event_btnSendActionPerformed
+    }//GEN-LAST:event_txtDestinationActionPerformed
 
     void traerDatosTabla() throws SQLException {
         DefaultTableModel model = new DefaultTableModel();
 
         Create_OrderController create_order = new Create_OrderController();
         List<Create_OrderDTO> listarOrdenes = create_order.listadoTotal();
-        String[] titulos = {"employe_ID", "full_name", "produc_type", "amount_order", "destination", "date", "currency","Total", "shipping_type", "total"};
+        String[] titulos = {"employe_ID", "full_name", "produc_type", "amount_order", "destination", "date", "currency", "Total", "shipping_type", "total"};
         model = new DefaultTableModel(null, titulos);
         tbOrder.setModel(model);
 
-        for(Create_OrderDTO ordenes : listarOrdenes){
+        for (Create_OrderDTO ordenes : listarOrdenes) {
             Object[] filas = new Object[9];
             filas[0] = ordenes.getEmploye_ID();
             filas[1] = ordenes.getFull_name();
@@ -209,11 +499,29 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSend;
+    private javax.swing.JButton btnSearch;
+    private javax.swing.JComboBox<String> bxCurrency;
+    private javax.swing.JComboBox<String> bxProducto_Type;
+    private javax.swing.JComboBox<String> bxShipping_type;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblAmount;
+    private javax.swing.JLabel lblCurrency;
+    private javax.swing.JLabel lblDestination;
+    private javax.swing.JLabel lblEmploye_Full_Name;
+    private javax.swing.JLabel lblEmploye_ID;
+    private javax.swing.JLabel lblProduct_Type;
+    private javax.swing.JLabel lblShipping_Type;
+    private javax.swing.JLabel lblTotal;
     private javax.swing.JTable tbOrder;
+    private javax.swing.JTextField txtAmount_Order;
+    private javax.swing.JTextField txtDestination;
+    private javax.swing.JTextField txtEmploye_ID;
+    private javax.swing.JTextField txtFull_Name;
+    private javax.swing.JTextPane txtSearch;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }
