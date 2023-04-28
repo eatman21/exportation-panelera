@@ -67,36 +67,64 @@ public class Create_Order extends javax.swing.JFrame {
         txtTotal = new javax.swing.JTextField();
         lblTotal = new javax.swing.JLabel();
         jDateFechaEnvio = new com.toedter.calendar.JDateChooser();
+        lblImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(1200, 1200));
+        setMaximumSize(new java.awt.Dimension(1200, 1200));
+        setMinimumSize(new java.awt.Dimension(1200, 1200));
+        getContentPane().setLayout(null);
 
         lblEmploye_ID.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblEmploye_ID.setForeground(new java.awt.Color(255, 255, 255));
         lblEmploye_ID.setText("Employe ID");
+        getContentPane().add(lblEmploye_ID);
+        lblEmploye_ID.setBounds(15, 20, 99, 32);
+        getContentPane().add(txtEmploye_ID);
+        txtEmploye_ID.setBounds(120, 21, 128, 32);
 
         lblEmploye_Full_Name.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblEmploye_Full_Name.setForeground(new java.awt.Color(255, 255, 255));
         lblEmploye_Full_Name.setText("Full Name");
+        getContentPane().add(lblEmploye_Full_Name);
+        lblEmploye_Full_Name.setBounds(15, 85, 99, 32);
+        getContentPane().add(txtFull_Name);
+        txtFull_Name.setBounds(120, 86, 217, 32);
 
         lblDestination.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblDestination.setForeground(new java.awt.Color(255, 255, 255));
         lblDestination.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logistics.png"))); // NOI18N
         lblDestination.setText("Destination");
+        getContentPane().add(lblDestination);
+        lblDestination.setBounds(57, 202, 154, 64);
 
         txtDestination.setFont(new java.awt.Font("Helvetica Neue", 0, 14)); // NOI18N
+        getContentPane().add(txtDestination);
+        txtDestination.setBounds(217, 202, 205, 64);
 
         lblDate.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblDate.setForeground(new java.awt.Color(255, 255, 255));
         lblDate.setText("Date");
+        getContentPane().add(lblDate);
+        lblDate.setBounds(307, 272, 57, 18);
 
         bxProducto_Type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         bxProducto_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Panela", "Sugar", "wine", "Ethanol", "Syrup" }));
         bxProducto_Type.setName(""); // NOI18N
+        getContentPane().add(bxProducto_Type);
+        bxProducto_Type.setBounds(428, 51, 90, 24);
 
         lblProduct_Type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblProduct_Type.setText("Product Type");
+        getContentPane().add(lblProduct_Type);
+        lblProduct_Type.setBounds(428, 18, 90, 27);
 
         lblAmount.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblAmount.setText("Amount Order");
+        getContentPane().add(lblAmount);
+        lblAmount.setBounds(573, 24, 104, 27);
+        getContentPane().add(txtAmount_Order);
+        txtAmount_Order.setBounds(573, 57, 104, 23);
 
         jCountry.setName("Country"); // NOI18N
         jCountry.addActionListener(new java.awt.event.ActionListener() {
@@ -104,6 +132,8 @@ public class Create_Order extends javax.swing.JFrame {
                 jCountryActionPerformed(evt);
             }
         });
+        getContentPane().add(jCountry);
+        jCountry.setBounds(217, 172, 205, 23);
 
         btnCreat_Order.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         btnCreat_Order.setText("Creat Order");
@@ -112,143 +142,49 @@ public class Create_Order extends javax.swing.JFrame {
                 btnCreat_OrderActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCreat_Order);
+        btnCreat_Order.setBounds(424, 403, 108, 24);
 
         lblShipping_Type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        lblShipping_Type.setForeground(new java.awt.Color(255, 255, 255));
         lblShipping_Type.setText("Shipping Type");
+        getContentPane().add(lblShipping_Type);
+        lblShipping_Type.setBounds(15, 322, 110, 18);
 
         lblCurrency.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         lblCurrency.setText("Currency");
+        getContentPane().add(lblCurrency);
+        lblCurrency.setBounds(631, 142, 89, 28);
 
         bxCurrency.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         bxCurrency.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dollar", "Euro" }));
+        getContentPane().add(bxCurrency);
+        bxCurrency.setBounds(631, 176, 89, 24);
 
         bxShipping_type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         bxShipping_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Baot", "Plane" }));
+        getContentPane().add(bxShipping_type);
+        bxShipping_type.setBounds(15, 352, 90, 24);
+        getContentPane().add(txtTotal);
+        txtTotal.setBounds(725, 57, 85, 23);
 
         lblTotal.setText("Total");
+        getContentPane().add(lblTotal);
+        lblTotal.setBounds(738, 24, 64, 27);
+        getContentPane().add(jDateFechaEnvio);
+        jDateFechaEnvio.setBounds(217, 296, 205, 23);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(409, 409, 409)
-                        .addComponent(btnCreat_Order)
-                        .addGap(180, 180, 180))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(292, 292, 292)
-                                .addComponent(lblDate, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(142, 142, 142))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblEmploye_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtEmploye_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lblEmploye_Full_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtFull_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblShipping_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bxShipping_type, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(202, 202, 202)
-                                        .addComponent(jCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(42, 42, 42)
-                                        .addComponent(lblDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(6, 6, 6)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtDestination)
-                                            .addComponent(jDateFechaEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblProduct_Type)
-                                    .addComponent(bxProducto_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(113, 113, 113)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(bxCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAmount_Order, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(48, 48, 48)
-                                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(61, 61, 61)
-                                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(245, Short.MAX_VALUE))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblEmploye_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtEmploye_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(32, 32, 32)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblEmploye_Full_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFull_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(54, 54, 54)
-                                .addComponent(jCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(7, 7, 7)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblDestination)
-                                    .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblProduct_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(6, 6, 6)
-                                .addComponent(bxProducto_Type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(191, 191, 191)))
-                        .addGap(6, 6, 6)
-                        .addComponent(lblDate))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtAmount_Order, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(62, 62, 62)
-                        .addComponent(lblCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bxCurrency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(btnCreat_Order))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateFechaEnvio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)
-                        .addComponent(lblShipping_Type)
-                        .addGap(12, 12, 12)
-                        .addComponent(bxShipping_type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-        );
+        lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exportation Image 4.png"))); // NOI18N
+        getContentPane().add(lblImage);
+        lblImage.setBounds(2, 10, 850, 480);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreat_OrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreat_OrderActionPerformed
+    
         Create_OrderDTO registrar = new Create_OrderDTO();
+        
         Date fecha = jDateFechaEnvio.getDate();
         System.out.println("Fecha tomada: "+fecha);
 
@@ -312,10 +248,15 @@ public class Create_Order extends javax.swing.JFrame {
         envioDatos = new Create_OrderController();
         try {
             envioDatos.crearOrder(registrar);
+            Order_Spreadsheet spreadsheetorder = new Order_Spreadsheet();
+            spreadsheetorder.setVisible(true);
+           this.dispose();
         } catch (SQLException ex) {
             Logger.getLogger(Create_Order.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
+        
     }//GEN-LAST:event_btnCreat_OrderActionPerformed
 
     private void jCountryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCountryActionPerformed
@@ -372,6 +313,7 @@ public class Create_Order extends javax.swing.JFrame {
     private javax.swing.JLabel lblDestination;
     private javax.swing.JLabel lblEmploye_Full_Name;
     private javax.swing.JLabel lblEmploye_ID;
+    private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblProduct_Type;
     private javax.swing.JLabel lblShipping_Type;
     private javax.swing.JLabel lblTotal;
