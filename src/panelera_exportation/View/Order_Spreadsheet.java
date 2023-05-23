@@ -6,8 +6,6 @@ package panelera_exportation.View;
 
 import javax.swing.table.DefaultTableModel;
 import Model.Create_OrderDTO;
-import com.mysql.cj.x.protobuf.Mysqlx;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -52,7 +50,6 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
     private void initComponents() {
 
         btnDelete = new javax.swing.JButton();
-        btnSave = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbOrder = new javax.swing.JTable();
@@ -75,7 +72,8 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtSearch = new javax.swing.JTextPane();
         txtDestination = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        btnAdd = new javax.swing.JButton();
+        lblImage_4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(1200, 1200));
@@ -91,17 +89,7 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnDelete);
-        btnDelete.setBounds(894, 17, 73, 33);
-
-        btnSave.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnSave);
-        btnSave.setBounds(597, 17, 72, 33);
+        btnDelete.setBounds(740, 20, 73, 33);
 
         btnEdit.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         btnEdit.setText("Edit");
@@ -111,7 +99,7 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnEdit);
-        btnEdit.setBounds(710, 17, 72, 33);
+        btnEdit.setBounds(600, 20, 72, 33);
 
         jScrollPane2.setViewportView(tbOrder);
 
@@ -212,9 +200,19 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
         getContentPane().add(txtDestination);
         txtDestination.setBounds(16, 236, 132, 41);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exportation Image 4.png"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(2, 7, 1110, 620);
+        btnAdd.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
+        btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAdd);
+        btnAdd.setBounds(890, 20, 72, 33);
+
+        lblImage_4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exportation Image 4.png"))); // NOI18N
+        getContentPane().add(lblImage_4);
+        lblImage_4.setBounds(2, 7, 1140, 640);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -372,14 +370,17 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnSaveActionPerformed
-
     private void txtDestinationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDestinationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDestinationActionPerformed
+
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        // TODO add your handling code here:
+        Create_Order create_order = new Create_Order();
+        create_order.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnAddActionPerformed
 
     void traerDatosTabla() throws SQLException {
         DefaultTableModel model = new DefaultTableModel();
@@ -445,14 +446,13 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> bxCurrency;
     private javax.swing.JComboBox<String> bxProducto_Type;
     private javax.swing.JComboBox<String> bxShipping_type;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblAmount;
@@ -460,6 +460,7 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
     private javax.swing.JLabel lblDestination;
     private javax.swing.JLabel lblEmploye_Full_Name;
     private javax.swing.JLabel lblEmploye_ID;
+    private javax.swing.JLabel lblImage_4;
     private javax.swing.JLabel lblProduct_Type;
     private javax.swing.JLabel lblShipping_Type;
     private javax.swing.JLabel lblTotal;

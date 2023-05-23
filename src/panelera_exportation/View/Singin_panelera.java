@@ -17,11 +17,11 @@ import panelera_exportation.Controller.LoginController;
 public class Singin_panelera extends javax.swing.JFrame {
 
     /**
-     * Creates new form sing_panelera
+     * Creates new form
      */
     public Singin_panelera() {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -38,6 +38,7 @@ public class Singin_panelera extends javax.swing.JFrame {
         txtusername = new javax.swing.JTextField();
         lblpassword = new javax.swing.JLabel();
         fldPassword = new javax.swing.JPasswordField();
+        btnCreate_user = new javax.swing.JButton();
         lblImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,7 +60,7 @@ public class Singin_panelera extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnLoging);
-        btnLoging.setBounds(379, 319, 138, 37);
+        btnLoging.setBounds(464, 250, 138, 37);
 
         txtusername.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
         getContentPane().add(txtusername);
@@ -75,31 +76,56 @@ public class Singin_panelera extends javax.swing.JFrame {
         getContentPane().add(fldPassword);
         fldPassword.setBounds(365, 192, 320, 40);
 
+        btnCreate_user.setFont(new java.awt.Font("Helvetica Neue", 1, 18)); // NOI18N
+        btnCreate_user.setText("Creat User");
+        btnCreate_user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreate_userActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCreate_user);
+        btnCreate_user.setBounds(464, 328, 138, 37);
+
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Colombia-Major-Exports.jpeg"))); // NOI18N
         getContentPane().add(lblImage);
-        lblImage.setBounds(12, 7, 900, 430);
+        lblImage.setBounds(12, 7, 910, 370);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLogingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogingActionPerformed
-       LoginController logingController = new LoginController();
-        String  use= txtusername.getText();
-        String  pass= new String(fldPassword.getPassword());
-        try {
-            if (logingController.validateusername(use,pass)){
-                
-                Create_Order Creord = new Create_Order();
-                Creord.setVisible(true);
-                this.dispose();
-            }else
-                JOptionPane.showMessageDialog(null,"Wrang Username or PassWord");
-        } catch (SQLException ex) {
-            Logger.getLogger(Singin_panelera.class.getName()).log(Level.SEVERE, null, ex);
+        LoginController logingController = new LoginController();
+        String use = txtusername.getText();
+        String pass = new String(fldPassword.getPassword());
+        if (!(use.trim().equals("") || pass.trim().equals(""))) {
+            try {
+                if (logingController.validateusername(use, pass)) {
+
+                    Create_Order Creord = new Create_Order();
+                    Creord.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Username or PassWord is invalid");
+                    cleanTextBox();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Singin_panelera.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(Singin_panelera.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes completar los campos requeridos", "Ingresa los valores", JOptionPane.ERROR_MESSAGE);
+            cleanTextBox();
         }
-         
+
     }//GEN-LAST:event_btnLogingActionPerformed
-        /**
+
+    private void btnCreate_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreate_userActionPerformed
+        Create_User CUsurio = new Create_User();
+        CUsurio.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCreate_userActionPerformed
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -135,14 +161,12 @@ public class Singin_panelera extends javax.swing.JFrame {
                 new Singin_panelera().setVisible(true);
             }
         });
-    
-        
-        
+
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreate_user;
     private javax.swing.JButton btnLoging;
     private javax.swing.JPasswordField fldPassword;
     private javax.swing.JLabel lblImage;
@@ -150,4 +174,9 @@ public class Singin_panelera extends javax.swing.JFrame {
     private javax.swing.JLabel lbluser_name;
     private javax.swing.JTextField txtusername;
     // End of variables declaration//GEN-END:variables
+
+    private void cleanTextBox() {
+        this.txtusername.setText("");
+        this.fldPassword.setText("");
+    }
 }
