@@ -57,29 +57,54 @@ public class Create_User extends javax.swing.JFrame {
         lblAddress = new javax.swing.JLabel();
         jDateFecha_naciemiento = new com.toedter.calendar.JDateChooser();
         lblFecha_Nacimiento = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
         lblFull_Name.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
+        lblFull_Name.setForeground(new java.awt.Color(255, 255, 255));
         lblFull_Name.setText("Full Name");
+        getContentPane().add(lblFull_Name);
+        lblFull_Name.setBounds(33, 90, 103, 32);
 
         txtFull_Name.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFull_NameActionPerformed(evt);
             }
         });
+        getContentPane().add(txtFull_Name);
+        txtFull_Name.setBounds(200, 91, 218, 32);
 
         lblEmail.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
+        lblEmail.setForeground(new java.awt.Color(255, 255, 255));
         lblEmail.setText("Email");
+        getContentPane().add(lblEmail);
+        lblEmail.setBounds(33, 159, 103, 32);
 
         lblPhone_Number.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
+        lblPhone_Number.setForeground(new java.awt.Color(255, 255, 255));
         lblPhone_Number.setText("Phone Number");
+        getContentPane().add(lblPhone_Number);
+        lblPhone_Number.setBounds(33, 254, 125, 32);
 
         lblUser_Name.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         lblUser_Name.setText("User Name");
+        getContentPane().add(lblUser_Name);
+        lblUser_Name.setBounds(33, 449, 103, 32);
+        getContentPane().add(txtEmail);
+        txtEmail.setBounds(200, 160, 218, 32);
+        getContentPane().add(txtPhone_Number);
+        txtPhone_Number.setBounds(200, 254, 218, 32);
+        getContentPane().add(txtUser_Name);
+        txtUser_Name.setBounds(200, 450, 218, 32);
 
         lblPassword.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         lblPassword.setText("Password");
+        getContentPane().add(lblPassword);
+        lblPassword.setBounds(33, 522, 103, 32);
+        getContentPane().add(txtPassword);
+        txtPassword.setBounds(200, 523, 218, 32);
 
         btnCreat_User.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         btnCreat_User.setText("Create User");
@@ -88,83 +113,27 @@ public class Create_User extends javax.swing.JFrame {
                 btnCreat_UserActionPerformed(evt);
             }
         });
+        getContentPane().add(btnCreat_User);
+        btnCreat_User.setBounds(231, 644, 108, 24);
+        getContentPane().add(txtAddress);
+        txtAddress.setBounds(200, 331, 218, 61);
 
         lblAddress.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
+        lblAddress.setForeground(new java.awt.Color(255, 255, 255));
         lblAddress.setText("Address");
+        getContentPane().add(lblAddress);
+        lblAddress.setBounds(33, 345, 125, 32);
+        getContentPane().add(jDateFecha_naciemiento);
+        jDateFecha_naciemiento.setBounds(221, 586, 148, 23);
 
         lblFecha_Nacimiento.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         lblFecha_Nacimiento.setText("Fecha Nacimiento");
+        getContentPane().add(lblFecha_Nacimiento);
+        lblFecha_Nacimiento.setBounds(33, 586, 134, 23);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPhone_Number, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUser_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFecha_Nacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFull_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
-                            .addComponent(txtPhone_Number))
-                        .addComponent(txtUser_Name, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFull_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(116, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnCreat_User)
-                        .addGap(195, 195, 195))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jDateFecha_naciemiento, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(165, 165, 165))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFull_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFull_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(62, 62, 62)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPhone_Number, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPhone_Number, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUser_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUser_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lblFecha_Nacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateFecha_naciemiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 35, Short.MAX_VALUE)
-                .addComponent(btnCreat_User)
-                .addGap(32, 32, 32))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exportation Image 4.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(2, 7, 530, 690);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -275,6 +244,7 @@ public class Create_User extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreat_User;
     private com.toedter.calendar.JDateChooser jDateFecha_naciemiento;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblAddress;
     private javax.swing.JLabel lblEmail;
     private javax.swing.JLabel lblFecha_Nacimiento;
