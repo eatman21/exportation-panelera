@@ -14,16 +14,22 @@ import java.sql.ResultSet;
 
 public class Conexion {
 
-    private String url = "jdbc:mysql://localhost:3308/panelera_exportation";
-    private String usuario = "root";
-    private String clave = "";
-    String driver = "com.mysql.jdbc.Driver";
+    private String url;
+    private String usuario;
+    private String clave;
+    private String driver;
     private Connection conexion;
+
+    // Load configuration from file
 
     Connection cx;
 
     public Conexion() {
-
+        // Load database configuration from external file
+        this.url = ConfigLoader.getDatabaseURL();
+        this.usuario = ConfigLoader.getDatabaseUser();
+        this.clave = ConfigLoader.getDatabasePassword();
+        this.driver = ConfigLoader.getDatabaseDriver();
     }
 
     public Connection getCx() {
@@ -40,19 +46,27 @@ public class Conexion {
 
     public void connectar() {
         try {
+            System.out.println("=== Database Connection Debug ===");
+            System.out.println("URL: " + this.url);
+            System.out.println("User: " + this.usuario);
+            System.out.println("Driver: " + this.driver);
+            System.out.println("================================");
+
             Class.forName(driver);
             conexion = DriverManager.getConnection(this.url, this.usuario, this.clave);
             System.out.println("Conectado");
         } catch (ClassNotFoundException | SQLException ex) {
+            System.err.println("Connection failed with URL: " + this.url);
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void desconectar() {
-        connectar();
         try {
-            conexion.close();
-            System.out.println("Desconectado");
+            if (conexion != null && !conexion.isClosed()) {
+                conexion.close();
+                System.out.println("Desconectado");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -64,30 +78,28 @@ public class Conexion {
     }
 
     public int ejecutarSentenciaSql(String sentSQL) {
-
         try {
-            PreparedStatement preSt = cx.prepareStatement(sentSQL);
-            preSt.execute();
-            return 1;
-
+            if (conexion != null) {
+                PreparedStatement preSt = conexion.prepareStatement(sentSQL);
+                preSt.execute();
+                return 1;
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
     }
 
     public ResultSet consultarReg(String sentSQL) {
         try {
-
-            PreparedStatement preSt = cx.prepareStatement(sentSQL);
-
-            ResultSet Resl = preSt.executeQuery();
-            return Resl;
-
+            if (conexion != null) {
+                PreparedStatement preSt = conexion.prepareStatement(sentSQL);
+                ResultSet Resl = preSt.executeQuery();
+                return Resl;
+            }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            return null;
         }
-
+        return null;
     }
 }

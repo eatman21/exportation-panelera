@@ -45,8 +45,6 @@ public class Create_Order extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCalendarBeanInfo1 = new com.toedter.calendar.JCalendarBeanInfo();
-        jDayChooserBeanInfo1 = new com.toedter.calendar.JDayChooserBeanInfo();
         lblEmploye_ID = new javax.swing.JLabel();
         txtEmploye_ID = new javax.swing.JTextField();
         lblEmploye_Full_Name = new javax.swing.JLabel();
@@ -58,7 +56,6 @@ public class Create_Order extends javax.swing.JFrame {
         lblProduct_Type = new javax.swing.JLabel();
         lblAmount = new javax.swing.JLabel();
         txtAmount_Order = new javax.swing.JTextField();
-        jCountry = new com.toedter.components.JLocaleChooser();
         btnCreat_Order = new javax.swing.JButton();
         lblShipping_Type = new javax.swing.JLabel();
         lblCurrency = new javax.swing.JLabel();
@@ -66,7 +63,6 @@ public class Create_Order extends javax.swing.JFrame {
         bxShipping_type = new javax.swing.JComboBox<>();
         txtTotal = new javax.swing.JTextField();
         lblTotal = new javax.swing.JLabel();
-        jDateFechaEnvio = new com.toedter.calendar.JDateChooser();
         lblImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -108,6 +104,10 @@ public class Create_Order extends javax.swing.JFrame {
         getContentPane().add(lblDate);
         lblDate.setBounds(307, 272, 57, 18);
 
+        jDateFechaEnvio = new com.toedter.calendar.JDateChooser();
+        getContentPane().add(jDateFechaEnvio);
+        jDateFechaEnvio.setBounds(370, 268, 150, 25);
+
         bxProducto_Type.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         bxProducto_Type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Panela", "Sugar", "wine", "Ethanol", "Syrup" }));
         bxProducto_Type.setName(""); // NOI18N
@@ -125,15 +125,6 @@ public class Create_Order extends javax.swing.JFrame {
         lblAmount.setBounds(573, 24, 104, 27);
         getContentPane().add(txtAmount_Order);
         txtAmount_Order.setBounds(573, 57, 104, 23);
-
-        jCountry.setName("Country"); // NOI18N
-        jCountry.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCountryActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jCountry);
-        jCountry.setBounds(217, 172, 205, 23);
 
         btnCreat_Order.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
         btnCreat_Order.setText("Creat Order");
@@ -171,8 +162,6 @@ public class Create_Order extends javax.swing.JFrame {
         lblTotal.setText("Total");
         getContentPane().add(lblTotal);
         lblTotal.setBounds(738, 24, 64, 27);
-        getContentPane().add(jDateFechaEnvio);
-        jDateFechaEnvio.setBounds(217, 296, 205, 23);
 
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exportation Image 4.png"))); // NOI18N
         getContentPane().add(lblImage);
@@ -303,10 +292,7 @@ public class Create_Order extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> bxCurrency;
     private javax.swing.JComboBox<String> bxProducto_Type;
     private javax.swing.JComboBox<String> bxShipping_type;
-    private com.toedter.calendar.JCalendarBeanInfo jCalendarBeanInfo1;
-    private com.toedter.components.JLocaleChooser jCountry;
     private com.toedter.calendar.JDateChooser jDateFechaEnvio;
-    private com.toedter.calendar.JDayChooserBeanInfo jDayChooserBeanInfo1;
     private javax.swing.JLabel lblAmount;
     private javax.swing.JLabel lblCurrency;
     private javax.swing.JLabel lblDate;

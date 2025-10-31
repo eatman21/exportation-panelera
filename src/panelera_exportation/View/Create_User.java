@@ -55,7 +55,6 @@ public class Create_User extends javax.swing.JFrame {
         btnCreat_User = new javax.swing.JButton();
         txtAddress = new javax.swing.JTextField();
         lblAddress = new javax.swing.JLabel();
-        jDateFecha_naciemiento = new com.toedter.calendar.JDateChooser();
         lblFecha_Nacimiento = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -123,13 +122,15 @@ public class Create_User extends javax.swing.JFrame {
         lblAddress.setText("Address");
         getContentPane().add(lblAddress);
         lblAddress.setBounds(33, 345, 125, 32);
-        getContentPane().add(jDateFecha_naciemiento);
-        jDateFecha_naciemiento.setBounds(221, 586, 148, 23);
 
         lblFecha_Nacimiento.setFont(new java.awt.Font("Helvetica Neue", 3, 14)); // NOI18N
         lblFecha_Nacimiento.setText("Fecha Nacimiento");
         getContentPane().add(lblFecha_Nacimiento);
         lblFecha_Nacimiento.setBounds(33, 586, 134, 23);
+
+        jDateFecha_naciemiento = new com.toedter.calendar.JDateChooser();
+        getContentPane().add(jDateFecha_naciemiento);
+        jDateFecha_naciemiento.setBounds(175, 586, 200, 25);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Exportation Image 4.png"))); // NOI18N
         getContentPane().add(jLabel1);

@@ -6,15 +6,12 @@ package panelera_exportation.Controller;
 
 import Configuration.Conexion;
 import java.sql.*;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import Model.Create_OrderDTO;
-import com.sun.jdi.connect.spi.Connection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
+import Model.Create_OrderDTO;
 
 /**
  *
@@ -22,17 +19,15 @@ import javax.swing.JOptionPane;
  */
 public class Create_OrderController {
 
-    private Connection cnn;
     private Conexion cn = new Conexion();
 
     public List<Create_OrderDTO> traerlasOrdenes() {
         List<Create_OrderDTO> arregloDeOrdenes = new ArrayList<>();
-        String sqlTraer = "SELECt employe_id, full_name, product_type, amount_order, destination, date, currency, total,shipping_type from create_orderdto";
+        String sqlTraer = "SELECT employe_id, full_name, product_type, amount_order, destination, date, currency, total, shipping_type FROM create_orderdto";
 
-        try {
-            cn.connectar();
-            PreparedStatement preparaConsulta = cn.getConexion().prepareStatement(sqlTraer);
-            ResultSet resultado = preparaConsulta.executeQuery();
+        cn.connectar();
+        try (PreparedStatement preparaConsulta = cn.getConexion().prepareStatement(sqlTraer);
+             ResultSet resultado = preparaConsulta.executeQuery()) {
 
             while (resultado.next()) {
                 Create_OrderDTO ordenTraida = new Create_OrderDTO();
@@ -41,7 +36,6 @@ public class Create_OrderController {
                 ordenTraida.setProduct_type(resultado.getString("Product_Type"));
                 ordenTraida.setAmount_order(resultado.getString("Amount_Order"));
                 ordenTraida.setDestination(resultado.getString("Destination"));
-
                 ordenTraida.setFechaEnvio(resultado.getDate("date"));
                 ordenTraida.setCurrency(resultado.getString("Currency"));
                 ordenTraida.setTota(resultado.getString("Total"));
@@ -50,8 +44,10 @@ public class Create_OrderController {
             }
             return arregloDeOrdenes;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error with the List: " + e);
+            JOptionPane.showMessageDialog(null, "Error with the List: " + e.getMessage());
             return Collections.emptyList();
+        } finally {
+            cn.desconectar();
         }
     }
 
@@ -60,33 +56,31 @@ public class Create_OrderController {
     }
 
     public Create_OrderDTO consultemploye_ID(int empleye_ID) throws SQLException {
-        ResultSet resul;
         Create_OrderDTO CreateDTO = new Create_OrderDTO();
-        String consulta = "SELECT employe_ID,full_name, product_type, amount_order, destination, date, currency, total,shipping_type FROM Create_OrderDTO WHERE employe_ID= '" + empleye_ID + "'  ";
+        String consulta = "SELECT employe_ID, full_name, product_type, amount_order, destination, date, currency, total, shipping_type FROM Create_OrderDTO WHERE employe_ID = ?";
 
-        try {
-            cn.connectar();
-            PreparedStatement preparaConsulta = cn.getConexion().prepareStatement(consulta);
-            ResultSet resultado = preparaConsulta.executeQuery();
+        cn.connectar();
+        try (PreparedStatement preparaConsulta = cn.getConexion().prepareStatement(consulta)) {
+            preparaConsulta.setInt(1, empleye_ID);
 
-            if (resultado.next()) {
-                CreateDTO = new Create_OrderDTO();
-                CreateDTO.setDestination(resultado.getString("destination"));
-                CreateDTO.setFechaEnvio(resultado.getDate("date"));
-                CreateDTO.setEmploye_ID(resultado.getInt("employe_ID"));
-                CreateDTO.setFull_name(resultado.getString("full_name"));
-                CreateDTO.setAmount_order(resultado.getString("amount_order"));
-                CreateDTO.setProduct_type(resultado.getString("product_type"));
-                CreateDTO.setCurrency(resultado.getString("currency"));
-                CreateDTO.setShipping_type(resultado.getString("Shipping_type"));
-                CreateDTO.setTota(resultado.getString("total"));
-            } else {
-                CreateDTO = new Create_OrderDTO();
-                JOptionPane.showMessageDialog(null, "No hay registros");
+            try (ResultSet resultado = preparaConsulta.executeQuery()) {
+                if (resultado.next()) {
+                    CreateDTO.setDestination(resultado.getString("destination"));
+                    CreateDTO.setFechaEnvio(resultado.getDate("date"));
+                    CreateDTO.setEmploye_ID(resultado.getInt("employe_ID"));
+                    CreateDTO.setFull_name(resultado.getString("full_name"));
+                    CreateDTO.setAmount_order(resultado.getString("amount_order"));
+                    CreateDTO.setProduct_type(resultado.getString("product_type"));
+                    CreateDTO.setCurrency(resultado.getString("currency"));
+                    CreateDTO.setShipping_type(resultado.getString("Shipping_type"));
+                    CreateDTO.setTota(resultado.getString("total"));
+                } else {
+                    JOptionPane.showMessageDialog(null, "No hay registros");
+                }
             }
-
         } catch (Exception e) {
-            System.out.println("Problemas al consultar:" + e);
+            System.out.println("Problemas al consultar: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             cn.desconectar();
         }
@@ -94,22 +88,20 @@ public class Create_OrderController {
     }
 
     public void crearOrder(Create_OrderDTO createDTO) throws SQLException {
+        String sql = "INSERT INTO Create_OrderDTO (full_name, product_type, amount_order, destination, date, currency, total, shipping_type) VALUES(?,?,?,?,?,?,?,?)";
 
-        try {
-            cn.connectar();
-
-            String sql = "INSERT INTO Create_OrderDTO (full_name, product_type, amount_order, destination, date, currency, total, shipping_type) VALUES(?,?,?,?,?,?,?,?)";
-            PreparedStatement st = cn.getConexion().prepareStatement(sql);
+        cn.connectar();
+        try (PreparedStatement st = cn.getConexion().prepareStatement(sql)) {
             st.setString(1, createDTO.getFull_name());
             st.setString(2, createDTO.getProduct_type());
             st.setString(3, createDTO.getAmount_order());
             st.setString(4, createDTO.getDestination());
-            //Castear fechas
+
+            // Castear fechas
             Date fechaEnvio = (Date) createDTO.getFechaEnvio();
             if (fechaEnvio != null) {
                 long tiempoEnvio = fechaEnvio.getTime();
-                System.out.println("Tiempo envio:" + tiempoEnvio);
-                // resto del código
+                System.out.println("Tiempo envio: " + tiempoEnvio);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String fechaMySQL = sdf.format(createDTO.getFechaEnvio());
                 System.out.println("Fecha formateada: " + fechaMySQL);
@@ -127,36 +119,38 @@ public class Create_OrderController {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Por favor comprueba los datos.", "Error al crear", JOptionPane.ERROR_MESSAGE);
-            System.out.println("Datos errados" + e);
+            System.out.println("Datos errados: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            cn.desconectar();
         }
-
     }
 
     public void deleteOrder(int employe_ID) {
-        String sql = "Delete FROM create_orderdto WHERE employe_ID='" + employe_ID + "'";
+        String sql = "DELETE FROM create_orderdto WHERE employe_ID = ?";
 
-        try {
-            cn.connectar();
-            PreparedStatement stmt = cn.getConexion().prepareStatement(sql);
+        cn.connectar();
+        try (PreparedStatement stmt = cn.getConexion().prepareStatement(sql)) {
+            stmt.setInt(1, employe_ID);
             int filasAfectadas = stmt.executeUpdate();
             if (filasAfectadas > 0) {
                 JOptionPane.showMessageDialog(null, "Data Deleted");
             } else {
-                JOptionPane.showMessageDialog(null, "Error to Delite");
+                JOptionPane.showMessageDialog(null, "Error to Delete");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error Deleting: " + this.getClass().getName());
+            JOptionPane.showMessageDialog(null, "Error Deleting: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             cn.desconectar();
         }
-
     }
 
     public void actualizarData(Create_OrderDTO actualiza, int id) {
-        try {
-            cn.connectar();
-            String sql = "update create_orderdto set full_name=?, product_type=?, amount_order=?, destination=?,currency=?, Total=?, shipping_type=? where employe_ID ='" + id + "'";
-            PreparedStatement st = cn.getConexion().prepareStatement(sql);
+        String sql = "UPDATE create_orderdto SET full_name=?, product_type=?, amount_order=?, destination=?, currency=?, Total=?, shipping_type=? WHERE employe_ID = ?";
+
+        cn.connectar();
+        try (PreparedStatement st = cn.getConexion().prepareStatement(sql)) {
             st.setString(1, actualiza.getFull_name());
             st.setString(2, actualiza.getProduct_type());
             st.setString(3, actualiza.getAmount_order());
@@ -164,16 +158,16 @@ public class Create_OrderController {
             st.setString(5, actualiza.getCurrency());
             st.setString(6, actualiza.getTota());
             st.setString(7, actualiza.getShipping_type());
+            st.setInt(8, id);
 
             st.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Actualziados");
+            JOptionPane.showMessageDialog(null, "Actualizados");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al Actualizar");
-
+            JOptionPane.showMessageDialog(null, "Error al Actualizar: " + e.getMessage());
+            e.printStackTrace();
         } finally {
             cn.desconectar();
         }
-
     }
 
 }

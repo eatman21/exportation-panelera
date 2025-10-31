@@ -4,6 +4,7 @@
  */
 package Funciones;
 
+import Configuration.ConfigLoader;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Base64;
@@ -20,7 +21,12 @@ public class Endcoder {
     private String clave_encrypt;
     private String clave_dencrypt;
 
-    private final String secretKey = "Valentina2425";
+    // Load encryption key from configuration file instead of hardcoding
+    private final String secretKey;
+
+    public Endcoder() {
+        this.secretKey = ConfigLoader.getEncryptionKey();
+    }
 
     public String getClave_encrypt() {
         return clave_encrypt;
