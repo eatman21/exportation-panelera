@@ -27,13 +27,71 @@ public class Create_Order extends javax.swing.JFrame {
     private String shipping_type;
     private String total;
 
+    // Variables for responsive scaling
+    private int originalWidth = 870;
+    private int originalHeight = 530;
+    private java.util.HashMap<java.awt.Component, java.awt.Rectangle> originalBounds = new java.util.HashMap<>();
+    private java.util.HashMap<java.awt.Component, java.awt.Font> originalFonts = new java.util.HashMap<>();
+
     /**
      * Creates new form Create_Order
      */
     public Create_Order() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setupResponsiveScaling();
 
+    }
+
+    private void setupResponsiveScaling() {
+        // Store original bounds and fonts of all components
+        for (java.awt.Component comp : getContentPane().getComponents()) {
+            originalBounds.put(comp, comp.getBounds());
+            if (comp.getFont() != null) {
+                originalFonts.put(comp, comp.getFont());
+            }
+        }
+
+        // Add component listener to handle resizing
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                scaleComponents();
+            }
+        });
+    }
+
+    private void scaleComponents() {
+        int currentWidth = getWidth();
+        int currentHeight = getHeight();
+
+        double scaleX = (double) currentWidth / originalWidth;
+        double scaleY = (double) currentHeight / originalHeight;
+
+        for (java.awt.Component comp : getContentPane().getComponents()) {
+            java.awt.Rectangle originalRect = originalBounds.get(comp);
+            if (originalRect != null) {
+                int newX = (int) (originalRect.x * scaleX);
+                int newY = (int) (originalRect.y * scaleY);
+                int newWidth = (int) (originalRect.width * scaleX);
+                int newHeight = (int) (originalRect.height * scaleY);
+
+                comp.setBounds(newX, newY, newWidth, newHeight);
+
+                // Scale font size for labels, buttons, and text fields using ORIGINAL font
+                if (comp instanceof javax.swing.JLabel || comp instanceof javax.swing.JButton ||
+                    comp instanceof javax.swing.JTextField || comp instanceof javax.swing.JComboBox) {
+                    java.awt.Font originalFont = originalFonts.get(comp);
+                    if (originalFont != null) {
+                        float newSize = (float) (originalFont.getSize() * Math.min(scaleX, scaleY));
+                        comp.setFont(originalFont.deriveFont(newSize));
+                    }
+                }
+            }
+        }
+
+        revalidate();
+        repaint();
     }
 
     /**
@@ -66,9 +124,6 @@ public class Create_Order extends javax.swing.JFrame {
         lblImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(1200, 1200));
-        setMaximumSize(new java.awt.Dimension(1200, 1200));
-        setMinimumSize(new java.awt.Dimension(1200, 1200));
         getContentPane().setLayout(null);
 
         lblEmploye_ID.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
@@ -167,7 +222,7 @@ public class Create_Order extends javax.swing.JFrame {
         getContentPane().add(lblImage);
         lblImage.setBounds(2, 10, 850, 480);
 
-        pack();
+        setSize(870, 530);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreat_OrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreat_OrderActionPerformed

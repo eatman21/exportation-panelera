@@ -30,14 +30,75 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
     private String shipping_type;
     private String total;
 
+    // Variables for responsive scaling
+    private int originalWidth = 1160;
+    private int originalHeight = 690;
+    private java.util.HashMap<java.awt.Component, java.awt.Rectangle> originalBounds = new java.util.HashMap<>();
+    private java.util.HashMap<java.awt.Component, java.awt.Font> originalFonts = new java.util.HashMap<>();
+
     /**
      * Creates new form Order_Spreadsheet
      */
     public Order_Spreadsheet() throws SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
+        setupResponsiveScaling();
 
         traerDatosTabla();
+    }
+
+    private void setupResponsiveScaling() {
+        // Store original bounds and fonts of all components
+        for (java.awt.Component comp : getContentPane().getComponents()) {
+            originalBounds.put(comp, comp.getBounds());
+            if (comp.getFont() != null) {
+                originalFonts.put(comp, comp.getFont());
+            }
+        }
+
+        // Add component listener to handle resizing
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                scaleComponents();
+            }
+        });
+    }
+
+    private void scaleComponents() {
+        int currentWidth = getWidth();
+        int currentHeight = getHeight();
+
+        double scaleX = (double) currentWidth / originalWidth;
+        double scaleY = (double) currentHeight / originalHeight;
+
+        for (java.awt.Component comp : getContentPane().getComponents()) {
+            java.awt.Rectangle originalRect = originalBounds.get(comp);
+            if (originalRect != null) {
+                int newX = (int) (originalRect.x * scaleX);
+                int newY = (int) (originalRect.y * scaleY);
+                int newWidth = (int) (originalRect.width * scaleX);
+                int newHeight = (int) (originalRect.height * scaleY);
+
+                comp.setBounds(newX, newY, newWidth, newHeight);
+
+                // Scale font size for labels, buttons, text fields, and combo boxes using ORIGINAL font
+                if (comp instanceof javax.swing.JLabel || comp instanceof javax.swing.JButton ||
+                    comp instanceof javax.swing.JTextField || comp instanceof javax.swing.JComboBox ||
+                    comp instanceof javax.swing.JScrollPane) {
+                    if (!(comp instanceof javax.swing.JScrollPane)) {
+                        java.awt.Font originalFont = originalFonts.get(comp);
+                        if (originalFont != null) {
+                            float newSize = (float) (originalFont.getSize() * Math.min(scaleX, scaleY));
+                            comp.setFont(originalFont.deriveFont(newSize));
+                        }
+                    }
+                }
+            }
+        }
+
+        revalidate();
+        repaint();
     }
 
     /**
@@ -76,9 +137,6 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
         lblImage_4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(1200, 1200));
-        setMaximumSize(new java.awt.Dimension(1200, 1200));
-        setMinimumSize(new java.awt.Dimension(1200, 1200));
         getContentPane().setLayout(null);
 
         btnDelete.setFont(new java.awt.Font("Helvetica Neue", 1, 14)); // NOI18N
@@ -214,7 +272,7 @@ public class Order_Spreadsheet extends javax.swing.JFrame {
         getContentPane().add(lblImage_4);
         lblImage_4.setBounds(2, 7, 1140, 640);
 
-        pack();
+        setSize(1160, 690);
     }// </editor-fold>//GEN-END:initComponents
 
     @SuppressWarnings("empty-statement")

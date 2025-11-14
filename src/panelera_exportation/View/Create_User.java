@@ -24,13 +24,71 @@ public class Create_User extends javax.swing.JFrame {
     private String _full_name, _email, _phone_number, _address, _user_name, _password;
     private int Phone_Number;
 
+    // Variables for responsive scaling
+    private int originalWidth = 550;
+    private int originalHeight = 730;
+    private java.util.HashMap<java.awt.Component, java.awt.Rectangle> originalBounds = new java.util.HashMap<>();
+    private java.util.HashMap<java.awt.Component, java.awt.Font> originalFonts = new java.util.HashMap<>();
+
     /**
      * Creates new form Create_User
      */
     public Create_User() {
         initComponents();
         this.setLocationRelativeTo(null);
+        setupResponsiveScaling();
 
+    }
+
+    private void setupResponsiveScaling() {
+        // Store original bounds and fonts of all components
+        for (java.awt.Component comp : getContentPane().getComponents()) {
+            originalBounds.put(comp, comp.getBounds());
+            if (comp.getFont() != null) {
+                originalFonts.put(comp, comp.getFont());
+            }
+        }
+
+        // Add component listener to handle resizing
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            @Override
+            public void componentResized(java.awt.event.ComponentEvent e) {
+                scaleComponents();
+            }
+        });
+    }
+
+    private void scaleComponents() {
+        int currentWidth = getWidth();
+        int currentHeight = getHeight();
+
+        double scaleX = (double) currentWidth / originalWidth;
+        double scaleY = (double) currentHeight / originalHeight;
+
+        for (java.awt.Component comp : getContentPane().getComponents()) {
+            java.awt.Rectangle originalRect = originalBounds.get(comp);
+            if (originalRect != null) {
+                int newX = (int) (originalRect.x * scaleX);
+                int newY = (int) (originalRect.y * scaleY);
+                int newWidth = (int) (originalRect.width * scaleX);
+                int newHeight = (int) (originalRect.height * scaleY);
+
+                comp.setBounds(newX, newY, newWidth, newHeight);
+
+                // Scale font size for labels and buttons using ORIGINAL font
+                if (comp instanceof javax.swing.JLabel || comp instanceof javax.swing.JButton ||
+                    comp instanceof javax.swing.JTextField) {
+                    java.awt.Font originalFont = originalFonts.get(comp);
+                    if (originalFont != null) {
+                        float newSize = (float) (originalFont.getSize() * Math.min(scaleX, scaleY));
+                        comp.setFont(originalFont.deriveFont(newSize));
+                    }
+                }
+            }
+        }
+
+        revalidate();
+        repaint();
     }
 
     /**
@@ -136,7 +194,7 @@ public class Create_User extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(2, 7, 530, 690);
 
-        pack();
+        setSize(550, 730);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtFull_NameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFull_NameActionPerformed
